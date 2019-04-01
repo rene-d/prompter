@@ -36,9 +36,9 @@ class Console:
         self.win_prompt = curses.newwin(1, curses.COLS - 5, curses.LINES - 1, 5)
         self.win_state = curses.newwin(5, curses.COLS, curses.LINES - 1, 0)
 
-        self.win_messages.bkgd(' ', curses.color_pair(1))
-        self.win_prompt.bkgd(' ', curses.color_pair(2))
-        self.win_state.bkgd(' ', curses.color_pair(3))
+        self.win_messages.bkgd(" ", curses.color_pair(1))
+        self.win_prompt.bkgd(" ", curses.color_pair(2))
+        self.win_state.bkgd(" ", curses.color_pair(3))
 
         self.win_state.addstr("  0> ")
         self.win_state.refresh()
@@ -54,7 +54,7 @@ class Console:
         self.win_prompt.keypad(True)
         self.win_prompt.move(0, 0)
 
-        self.history = ['']
+        self.history = [""]
         self.history_index = 0
 
     def stop(self):
@@ -72,13 +72,13 @@ class Console:
         if key == -1:
             return
 
-        if key == ord('@') or key == curses.ascii.EOT:
+        if key == ord("@") or key == curses.ascii.EOT:
             self._stop = True
             return
 
         if key == curses.KEY_RESIZE or key == curses.ascii.FF:
             curses.update_lines_cols()
-            z_log('resize {}x{}'.format(curses.COLS, curses.LINES))
+            z_log("resize {}x{}".format(curses.COLS, curses.LINES))
             self.win_messages.refresh()
             self.win_prompt.refresh()
             self.win_state.refresh()
@@ -89,9 +89,9 @@ class Console:
             z_log("edit " + cmd)
             self.win_prompt.erase()
 
-            if cmd != '':
+            if cmd != "":
                 self.history[self.history_index] = cmd
-                self.history.append('')
+                self.history.append("")
                 self.history_index += 1
                 z_log("command: " + repr(self.history))
                 return cmd
@@ -131,9 +131,9 @@ class Console:
             self.win_prompt.move(y, x)
             self.win_messages.refresh()
 
-            if key == curses.ascii.DEL:         # ⌫
+            if key == curses.ascii.DEL:  # ⌫
                 key = curses.KEY_BACKSPACE
-            elif key == curses.KEY_DC:          # ⌦
+            elif key == curses.KEY_DC:  # ⌦
                 key = curses.ascii.EOT
 
             if self.edit.do_command(key):
@@ -154,7 +154,7 @@ def loop(console):
         if 0 in o:
             cmd = console.do_command()
             if cmd:
-                if cmd.lower() == 'quit':
+                if cmd.lower() == "quit":
                     break
                 console.msg("commande: {}".format(cmd))
 
